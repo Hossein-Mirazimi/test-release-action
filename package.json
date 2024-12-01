@@ -7,9 +7,9 @@
     "build": "tsc"
   },
   "files": [
-    "dist"
+    "index.js"
   ],
-  "exports": "dist/index.js",
+  "exports": "./index.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
