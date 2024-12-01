@@ -36,12 +36,15 @@ jobs:
           draft: false
           prerelease: false
 
+      - name: Create a zip of dist
+        run: zip -r vue-calendar.zip ./dist
+  
       - name: Upload Bundled Files
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist
+          asset_path: ./vue-calendar.zip
           asset_name: vue-calendar.zip
           asset_content_type: application/zip
