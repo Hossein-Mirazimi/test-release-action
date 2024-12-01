@@ -38,7 +38,7 @@ jobs:
 
       - name: Create a tar.gz archive of the dist folder
         run: |
-          tar -czvf vue-calendar-v4.tar.gz -C ./dist .
+          tar -czvf vue-calendar-v4.tar.gz -C . .
   
       - name: Upload Bundled Files
         uses: actions/upload-release-asset@v1
