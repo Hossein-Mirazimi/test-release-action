@@ -24,21 +24,23 @@ jobs:
 
       - name: Build project
         run: yarn build
-
+      - name: Prepare package.json
+        run: |
+          cp package.json ./dist/
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v5
+          tag_name: v6
           release_name: Release ${{ github.ref_name }} v1
           draft: false
           prerelease: false
 
       - name: Create a tar.gz archive of the dist folder
         run: |
-          tar -czvf vue-calendar-v5.tar.gz -C . .
+          tar -czvf vue-calendar-v6.tar.gz -C ./dist .
   
       - name: Upload Bundled Files
         uses: actions/upload-release-asset@v1
@@ -46,6 +48,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./vue-calendar-v5.tar.gz
-          asset_name: vue-calendar-v5.tar.gz
+          asset_path: ./vue-calendar-v6.tar.gz
+          asset_name: vue-calendar-v6.tar.gz
           asset_content_type: application/gzip
