@@ -37,7 +37,7 @@ jobs:
 
       # Step 6: Create a tar.gz archive of the dist folder
       - name: Create a tar.gz archive
-        run: tar -czvf vue-calendar-${{ github.ref_name }}.tar.gz package.json dist
+        run: tar -czvf vue-calendar-v1.15.0.tar.gz package.json dist
 
       # Step 7: Create GitHub Release and upload the tar.gz asset
       - name: Create Release
@@ -46,8 +46,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
+          tag_name: v1.15.0
+          release_name: Release v1.15.0
           draft: false
           prerelease: false
   
@@ -57,6 +57,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./vue-calendar-${{ github.ref_name }}.tar.gz
-          asset_name: vue-calendar-${{ github.ref_name }}.tar.gz
+          asset_path: ./vue-calendar-v1.15.0.tar.gz
+          asset_name: vue-calendar-v1.15.0.tar.gz
           asset_content_type: application/gzip
