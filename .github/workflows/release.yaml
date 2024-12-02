@@ -35,7 +35,7 @@ jobs:
 
       # Step 6: Create a tar.gz archive of the dist folder
       - name: Create a tar.gz archive
-        run: tar -czvf vue-calendar-v${{ github.ref_name }}.tar.gz -C . .
+        run: tar --exclude='./node_modules' -czvf vue-calendar-v${{ github.ref_name }}.tar.gz -C . .
 
       # Step 7: Create GitHub Release and upload the tar.gz asset
       - name: Create GitHub Release
