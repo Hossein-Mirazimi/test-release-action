@@ -2,15 +2,15 @@
   "name": "test-release-action",
   "version": "1.11.0",
   "description": "",
-  "main": "./dist/index.js",
+  "main": "./index.js",
   "scripts": {
     "build": "tsc"
   },
   "files": [
-    "dist/index.js"
+    "index.js"
   ],
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./index.js"
   },
   "keywords": [],
   "author": "",
