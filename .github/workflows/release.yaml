@@ -11,43 +11,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: yarn
 
+      # Step 4: Build the project
       - name: Build project
         run: yarn build
-      - name: Prepare package.json
-        run: |
-          cp package.json ./dist/
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v7
-          release_name: Release ${{ github.ref_name }} v1
-          draft: false
-          prerelease: false
 
-      - name: Create a tar.gz archive of the dist folder
-        run: |
-          tar -czvf vue-calendar-v7.tar.gz -C ./dist .
-  
-      - name: Upload Bundled Files
-        uses: actions/upload-release-asset@v1
+      # Step 5: Prepare package.json
+      # - name: Prepare package.json
+      #   run: cp package.json ./dist/
+
+      # Step 6: Create a tar.gz archive of the dist folder
+      - name: Create a tar.gz archive
+        run: tar -czvf vue-calendar-v${{ github.ref_name }}.tar.gz -C . .
+
+      # Step 7: Create GitHub Release and upload the tar.gz asset
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: vue-calendar-v${{ github.ref_name }}.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./vue-calendar-v7.tar.gz
-          asset_name: vue-calendar-v7.tar.gz
-          asset_content_type: application/gzip
