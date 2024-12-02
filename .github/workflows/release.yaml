@@ -36,13 +36,12 @@ jobs:
       # Step 6: Create a tar.gz archive of the dist folder
       - name: Create a tar.gz archive
         run: |
-          ls
-          tar -czvf vue-calendar-v${{ github.ref_name }}.tar.gz package.json dist
+          tar -czvf vue-calendar-${{ github.ref_name }}.tar.gz package.json dist
 
       # Step 7: Create GitHub Release and upload the tar.gz asset
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: vue-calendar-v${{ github.ref_name }}.tar.gz
+          files: vue-calendar-${{ github.ref_name }}.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
