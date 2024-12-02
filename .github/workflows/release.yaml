@@ -8,8 +8,6 @@ on:
 
 jobs:
   release:
-    env:
-      fileName: dist # ${{ github.ref_name }}
     runs-on: ubuntu-latest
 
     steps:
@@ -37,13 +35,26 @@ jobs:
 
       # Step 6: Create a tar.gz archive of the dist folder
       - name: Create a tar.gz archive
-        run: |
-          tar -czvf vue-calendar-${{ env.fileName }}.tar.gz package.json dist
+        run: tar -czvf vue-calendar-${{ github.ref_name }}.tar.gz package.json dist
 
       # Step 7: Create GitHub Release and upload the tar.gz asset
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: vue-calendar-${{ env.fileName }}.tar.gz
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+  
+      - name: Upload Bundled Files
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./vue-calendar-${{ github.ref_name }}.tar.gz
+          asset_name: vue-calendar-${{ github.ref_name }}.tar.gz
+          asset_content_type: application/gzip
