@@ -30,19 +30,24 @@ jobs:
       # Step 4: Build the project
       - name: Build project
         run: yarn build
+        
       - name: Debug Token Permissions
         run: |
           echo "Checking token permissions"
           curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
                -H "Accept: application/vnd.github.v3+json" \
                https://api.github.com/repos/${{ github.repository }}
+
+      - name: Prepare package.json
+        run: |
+          cp package.json ./dist/
       # Step 5: Prepare package.json
       # - name: Prepare package.json
       #   run: cp package.json ./dist/
 
       # Step 6: Create a tar.gz archive of the dist folder
       - name: Create a tar.gz archive
-        run: tar -czvf vue-calendar-${{ github.ref_name }}.tar.gz package.json dist
+        run: tar -czvf vue-calendar-${{ github.ref_name }}.tar.gz -C dist .
 
       # Step 7: Create GitHub Release and upload the tar.gz asset
       - name: Create Release
