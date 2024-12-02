@@ -37,7 +37,7 @@ jobs:
       - name: Create a tar.gz archive
         run: |
           ls
-          tar --include="./package.json" --include="dist" -czvf vue-calendar-v${{ github.ref_name }}.tar.gz -C . .
+          tar -czvf vue-calendar-v${{ github.ref_name }}.tar.gz -C package.json dist
 
       # Step 7: Create GitHub Release and upload the tar.gz asset
       - name: Create GitHub Release

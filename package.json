@@ -2,14 +2,14 @@
   "name": "test-release-action",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
   },
   "files": [
-    "index.js"
+    "dist"
   ],
-  "exports": "./index.js",
+  "exports": "./dist/index.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
